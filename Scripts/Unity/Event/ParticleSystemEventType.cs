@@ -2,6 +2,10 @@
 
 namespace AvalonAssets.Unity.Event
 {
+    /// <summary>
+    ///     Event types used by <see cref="ParticleSystemEventTrigger" />
+    /// </summary>
+    /// <seealso cref="ParticleSystemEventTrigger" />
     public enum ParticleSystemEventType
     {
         /// <summary>

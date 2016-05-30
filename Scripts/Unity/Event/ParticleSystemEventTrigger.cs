@@ -37,8 +37,9 @@ namespace AvalonAssets.Unity.Event
         }
         
         private void Update()
-        {
-            if (_finish || _particleSystem == null) return; // Skip if it has finished or there is no paraticle system.
+        { 
+            // Skip if it has finished or there is no paraticle system.
+            if (_finish || _particleSystem == null) return;
             bool isTirgger;
             switch (EventType)
             {

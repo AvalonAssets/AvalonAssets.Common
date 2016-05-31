@@ -90,5 +90,38 @@ namespace AvalonAssets.Unity
             }
             return new Color32(r, g, b, a);
         }
+
+        /// <summary>
+        ///     Convert a string to a rich text string.
+        /// </summary>
+        /// <param name="input">Orginal string.</param>
+        /// <param name="hex">Hex value of the color.</param>
+        /// <returns>Rich text string</returns>
+        internal static string AddColor(this string input, string hex)
+        {
+            return "<color=" + hex + ">" + input + "</color>";
+        }
+
+        /// <summary>
+        ///     Convert a string to a rich text string.
+        /// </summary>
+        /// <param name="input">Orginal string.</param>
+        /// <param name="color">Color to be added.</param>
+        /// <returns>Rich text string</returns>
+        internal static string AddColor(this string input, Color color)
+        {
+            return "<color=" + color.ToHex() + ">" + input + "</color>";
+        }
+
+        /// <summary>
+        ///     Convert a string to a rich text string.
+        /// </summary>
+        /// <param name="input">Orginal string.</param>
+        /// <param name="color">Color to be added.</param>
+        /// <returns>Rich text string</returns>
+        internal static string AddColor(this string input, Color32 color)
+        {
+            return "<color=" + color.ToHex() + ">" + input + "</color>";
+        }
     }
 }

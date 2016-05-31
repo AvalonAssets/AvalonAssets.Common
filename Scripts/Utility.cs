@@ -41,5 +41,27 @@ namespace AvalonAssets
                 return input.Substring(1, input.Length - 2);
             return input;
         }
+
+        /// <summary>
+        ///     Append <paramref name="appendInput" /> to <paramref name="input" />.
+        /// </summary>
+        /// <param name="input">String at the front.</param>
+        /// <param name="appendInput">String at the end.</param>
+        /// <returns>Appended string.</returns>
+        internal static string Append(this string input, string appendInput)
+        {
+            return input + appendInput;
+        }
+
+        /// <summary>
+        ///     Append <paramref name="appendInput" /> to <paramref name="input" /> with new line.
+        /// </summary>
+        /// <param name="input">String at the front.</param>
+        /// <param name="appendInput">String at the end.</param>
+        /// <returns>Appended string with new line.</returns>
+        internal static string AppendLine(this string input, string appendInput)
+        {
+            return input.Append(appendInput + "\n");
+        }
     }
 }

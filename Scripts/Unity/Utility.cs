@@ -1,5 +1,5 @@
-using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using UnityEngine;
 
@@ -39,35 +39,56 @@ namespace AvalonAssets.Unity
         }
 
         /// <summary>
-        ///     Split string on specific character(s).
+        ///     Convert color to a hex value.
         /// </summary>
-        /// <param name="input"><see cref="string" /> to be splited.</param>
-        /// <param name="splitFunction">Decide to split on which character.</param>
-        /// <returns>Splited string.</returns>
-        internal static IEnumerable<string> Split(this string input, Func<char, bool> splitFunction)
+        /// <param name="color">Color to be converted.</param>
+        /// <returns>Hex value of the color.</returns>
+        internal static string ToHex(this Color32 color)
         {
-            var index = 0;
-            for (var i = 0; i < input.Length; i++)
-            {
-                if (!splitFunction(input[i])) continue;
-                yield return input.Substring(index, i - index);
-                index = i + 1;
-            }
-            yield return input.Substring(index);
+            var hex = "#" + color.r.ToString("X2") + color.g.ToString("X2") + color.b.ToString("X2");
+            return hex;
         }
 
         /// <summary>
-        ///     Remove <paramref name="quote" /> from start and end of the <paramref name="input" />.
+        ///     Convert color to a hex value.
         /// </summary>
-        /// <param name="input"><see cref="string" /> to be processed.</param>
-        /// <param name="quote">Quoting character.</param>
-        /// <returns>Trimmed string.</returns>
-        internal static string TrimMatchingQuotes(this string input, char quote)
+        /// <param name="color">Color to be converted.</param>
+        /// <returns>Hex value of the color.</returns>
+        internal static string ToHex(this Color color)
         {
-            if ((input.Length >= 2) &&
-                (input[0] == quote) && (input[input.Length - 1] == quote))
-                return input.Substring(1, input.Length - 2);
-            return input;
+            Color32 color32 = color;
+            return color32.ToHex();
+        }
+
+        /// <summary>
+        ///     Convert hex value to a color.
+        /// </summary>
+        /// <param name="hex">Hex value to be converted.</param>
+        /// <returns>Color of the hex value.</returns>
+        internal static Color ToColor(this string hex)
+        {
+            return hex.ToColor32();
+        }
+
+        /// <summary>
+        ///     Convert hex value to a color.
+        /// </summary>
+        /// <param name="hex">Hex value to be converted.</param>
+        /// <returns>Color of the hex value.</returns>
+        internal static Color32 ToColor32(this string hex)
+        {
+            hex = hex.Replace("0x", ""); //in case the string is formatted 0xFFFFFF
+            hex = hex.Replace("#", ""); //in case the string is formatted #FFFFFF
+            byte a = 255; //assume fully visible unless specified in hex
+            var r = byte.Parse(hex.Substring(0, 2), NumberStyles.HexNumber);
+            var g = byte.Parse(hex.Substring(2, 2), NumberStyles.HexNumber);
+            var b = byte.Parse(hex.Substring(4, 2), NumberStyles.HexNumber);
+            //Only use alpha if the string has enough characters
+            if (hex.Length == 8)
+            {
+                a = byte.Parse(hex.Substring(4, 2), NumberStyles.HexNumber);
+            }
+            return new Color32(r, g, b, a);
         }
     }
 }
